@@ -1,5 +1,5 @@
+import { parseConstraints } from '../core/parser/parseConstraints';
 import { extractUploadContext } from '../core/detector/extractUploadContext';
-
 export default defineContentScript({
   matches: ['<all_urls>'],
 
@@ -22,9 +22,17 @@ export default defineContentScript({
         name: input.name || 'Not specified',
         id: input.id || 'Not specified',
       });
-      const context = extractUploadContext(input);
 
+      //1.Extract context
+      const context = extractUploadContext(input);
       console.log('[FileThrough] Upload context', context);
+      //2.Parse constraints
+      const constraints = parseConstraints(context);
+
+      console.log(
+        '[FileThrough] Upload constraints',
+        constraints
+      );
     }
 
     function scanForFileInputs(root: ParentNode = document) {
