@@ -1,5 +1,7 @@
 import { parseConstraints } from '../core/parser/parseConstraints';
 import { extractUploadContext } from '../core/detector/extractUploadContext';
+import { inspectFile } from '../core/inspector/inspectFile';
+import { validateFile } from '../core/validator/validateFile';
 export default defineContentScript({
   matches: ['<all_urls>'],
 
@@ -33,6 +35,33 @@ export default defineContentScript({
         '[FileThrough] Upload constraints',
         constraints
       );
+      input.addEventListener('change', async () => {
+        const file = input.files?.[0];
+
+        if (!file) {
+          return;
+        }
+
+        try {
+          const fileInfo = await inspectFile(file);
+
+          console.log(
+            '[FileThrough] Selected file',
+            fileInfo
+          );
+          //3.Validate the file
+          const validation = validateFile(fileInfo, constraints);
+          console.log(
+            '[FileThrough] Validation result',
+            validation
+          );
+        } catch (error) {
+          console.error(
+            '[FileThrough] Could not inspect file',
+            error
+          );
+        }
+      });
     }
 
     function scanForFileInputs(root: ParentNode = document) {
