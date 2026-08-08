@@ -3,6 +3,7 @@ import { extractUploadContext } from '../core/detector/extractUploadContext';
 import { inspectFile } from '../core/inspector/inspectFile';
 import { validateFile } from '../core/validator/validateFile';
 import { createTransformationPlan } from '../core/planner/createTransformationPlan';
+import { transformImage } from '../core/transformer/transformImage';
 export default defineContentScript({
   matches: ['<all_urls>'],
 
@@ -59,15 +60,27 @@ export default defineContentScript({
 
           //4.Create transformation plan
           const plan = createTransformationPlan(fileInfo, constraints);
-          console.log(
-            '[FileThrough] Transformation plan',
-            plan
-          );
-        } catch (error) {
-          console.error(
-            '[FileThrough] Could not inspect file',
-            error
-          );
+          console.log('[FileThrough] Transformation plan', plan);
+          if (Object.keys(plan).length > 0) {
+            try {
+              const transformedFile =
+                await transformImage(file, plan);
+
+              const transformedInfo =
+                await inspectFile(transformedFile);
+
+              console.log(
+                '[FileThrough] Transformed file',
+                transformedInfo
+              );
+            }
+            catch (error) {
+              console.error('[FileThrough] Transformation failed', error);
+            }
+          }
+        }
+        catch (error) {
+          console.error('[FileThrough] Could not inspect file', error);
         }
       });
     }
