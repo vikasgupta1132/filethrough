@@ -2,6 +2,7 @@ import { parseConstraints } from '../core/parser/parseConstraints';
 import { extractUploadContext } from '../core/detector/extractUploadContext';
 import { inspectFile } from '../core/inspector/inspectFile';
 import { validateFile } from '../core/validator/validateFile';
+import { createTransformationPlan } from '../core/planner/createTransformationPlan';
 export default defineContentScript({
   matches: ['<all_urls>'],
 
@@ -54,6 +55,13 @@ export default defineContentScript({
           console.log(
             '[FileThrough] Validation result',
             validation
+          );
+
+          //4.Create transformation plan
+          const plan = createTransformationPlan(fileInfo, constraints);
+          console.log(
+            '[FileThrough] Transformation plan',
+            plan
           );
         } catch (error) {
           console.error(
