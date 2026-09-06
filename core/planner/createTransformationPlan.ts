@@ -55,13 +55,21 @@ export function createTransformationPlan(
     // ----------------------------------------
 
     if (
-        constraints.maxBytes !== undefined &&
-        file.sizeBytes > constraints.maxBytes
+        (constraints.minBytes !== undefined &&
+            file.sizeBytes < constraints.minBytes) ||
+        (constraints.maxBytes !== undefined &&
+            file.sizeBytes > constraints.maxBytes)
     ) {
-        plan.compress = {
+    plan.compress = {
+        ...(constraints.minBytes !== undefined && {
+            minBytes: constraints.minBytes,
+        }),
+
+        ...(constraints.maxBytes !== undefined && {
             maxBytes: constraints.maxBytes,
-        };
-    }
+        }),
+    };
+}
 
     return plan;
 }

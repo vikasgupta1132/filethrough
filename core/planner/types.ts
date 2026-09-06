@@ -7,6 +7,7 @@ export interface TransformationPlan {
     };
 
     compress?: {
-        maxBytes: number;
+        minBytes?: number;
+        maxBytes?: number;
     };
 }

@@ -4,6 +4,7 @@ import { inspectFile } from '../core/inspector/inspectFile';
 import { validateFile } from '../core/validator/validateFile';
 import { createTransformationPlan } from '../core/planner/createTransformationPlan';
 import { transformImage } from '../core/transformer/transformImage';
+import { compressImage } from '../core/transformer/compressImage';
 export default defineContentScript({
   matches: ['<all_urls>'],
 
@@ -62,22 +63,53 @@ export default defineContentScript({
           const plan = createTransformationPlan(fileInfo, constraints);
           console.log('[FileThrough] Transformation plan', plan);
           if (Object.keys(plan).length > 0) {
-            try {
-              const transformedFile =
-                await transformImage(file, plan);
+  let transformedFile = file;
 
-              const transformedInfo =
-                await inspectFile(transformedFile);
+  try {
+    transformedFile =
+      await transformImage(file, plan);
 
-              console.log(
-                '[FileThrough] Transformed file',
-                transformedInfo
-              );
-            }
-            catch (error) {
-              console.error('[FileThrough] Transformation failed', error);
-            }
-          }
+    const transformedInfo =
+      await inspectFile(transformedFile);
+
+    console.log(
+      '[FileThrough] Transformed file',
+      transformedInfo
+    );
+  }
+  catch (error) {
+    console.error('[FileThrough] Transformation failed', error);
+  }
+
+  let finalFile = transformedFile;
+
+  if (plan.compress) {
+    try {
+      finalFile = await compressImage(
+        transformedFile,
+        {
+          minBytes: plan.compress.minBytes,
+          maxBytes: plan.compress.maxBytes,
+        }
+      );
+
+      const finalInfo =
+        await inspectFile(finalFile);
+
+      console.log(
+        '[FileThrough] Compressed file',
+        finalInfo
+      );
+    }
+    catch (error) {
+      console.error(
+        '[FileThrough] Compression failed',
+        error
+      );
+    }
+  }
+}
+
         }
         catch (error) {
           console.error('[FileThrough] Could not inspect file', error);
