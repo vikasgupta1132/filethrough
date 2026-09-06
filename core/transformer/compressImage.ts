@@ -6,7 +6,11 @@ export async function compressImage(
     format?: 'jpeg' | 'png' | 'webp';
   }
 ): Promise<File> {
-  const {minBytes,maxBytes,format = 'jpeg',} = options;
+  const {
+    minBytes,
+    maxBytes,
+    format = 'jpeg',
+  } = options;
 
   if (!file.type.startsWith('image/')) {
     throw new Error(
@@ -52,12 +56,16 @@ export async function compressImage(
     canvas.height
   );
 
-  // If the file is too small, try maximum JPEG quality.
-    if (
+  // File is below the minimum size.
+  if (
     minBytes !== undefined &&
     file.size < minBytes
   ) {
-    const blob = await canvasToBlob(canvas, 1, format);
+    const blob = await canvasToBlob(
+      canvas,
+      1,
+      format
+    );
 
     console.log(
       '[FileThrough] Minimum-size attempt:',
@@ -71,35 +79,52 @@ export async function compressImage(
 
     if (
       blob.size >= minBytes &&
-      (maxBytes === undefined || blob.size <= maxBytes)
-    ) {
-      return createCompressedFile(file, blob, format);
-    }
-
-   if (
-  blob.size < minBytes &&
-  (maxBytes === undefined || blob.size <= maxBytes)
-) {
-  if (format === 'jpeg') {
-    const paddedBlob =
-      await padJpegToMinimum(
-        blob,
-        minBytes
-      );
-
-    if (
-      paddedBlob.size >= minBytes &&
       (maxBytes === undefined ||
-        paddedBlob.size <= maxBytes)
+        blob.size <= maxBytes)
     ) {
       return createCompressedFile(
         file,
-        paddedBlob,
+        blob,
         format
       );
     }
-  }
-}
+
+    if (
+      blob.size < minBytes &&
+      (maxBytes === undefined ||
+        blob.size <= maxBytes)
+    ) {
+      let paddedBlob: Blob | null = null;
+
+      if (format === 'jpeg') {
+        paddedBlob =
+          await padJpegToMinimum(
+            blob,
+            minBytes
+          );
+      }
+
+      if (format === 'png') {
+        paddedBlob =
+          await padPngToMinimum(
+            blob,
+            minBytes
+          );
+      }
+
+      if (
+        paddedBlob &&
+        paddedBlob.size >= minBytes &&
+        (maxBytes === undefined ||
+          paddedBlob.size <= maxBytes)
+      ) {
+        return createCompressedFile(
+          file,
+          paddedBlob,
+          format
+        );
+      }
+    }
 
     throw new Error(
       `Unable to produce an image between ${minBytes} and ${
@@ -108,7 +133,7 @@ export async function compressImage(
     );
   }
 
-  // At this point the file is too large.
+  // File is above the maximum size.
   if (maxBytes === undefined) {
     throw new Error(
       'Cannot compress image without a maximum byte limit.'
@@ -120,7 +145,8 @@ export async function compressImage(
   let bestBlob: Blob | null = null;
 
   for (let attempt = 0; attempt < 10; attempt++) {
-    const quality = (low + high) / 2;
+    const quality =
+      (low + high) / 2;
 
     const blob = await canvasToBlob(
       canvas,
@@ -163,7 +189,11 @@ export async function compressImage(
     );
   }
 
-  return createCompressedFile(file, bestBlob, format);
+  return createCompressedFile(
+    file,
+    bestBlob,
+    format
+  );
 }
 
 function createCompressedFile(
@@ -341,6 +371,145 @@ function padJpegToMinimum(
   });
 }
 
+function padPngToMinimum(
+  blob: Blob,
+  minBytes: number
+): Promise<Blob> {
+  return blob.arrayBuffer().then((buffer) => {
+    const bytes = new Uint8Array(buffer);
+
+    if (
+      bytes.length < 12 ||
+      bytes[0] !== 0x89 ||
+      bytes[1] !== 0x50 ||
+      bytes[2] !== 0x4e ||
+      bytes[3] !== 0x47 ||
+      bytes[4] !== 0x0d ||
+      bytes[5] !== 0x0a ||
+      bytes[6] !== 0x1a ||
+      bytes[7] !== 0x0a
+    ) {
+      throw new Error(
+        'Cannot pad PNG: invalid PNG data.'
+      );
+    }
+
+    const paddingBytes =
+      minBytes - bytes.length;
+
+    if (paddingBytes <= 0) {
+      return blob;
+    }
+
+    const chunkDataLength =
+      paddingBytes - 12;
+
+    if (chunkDataLength < 0) {
+      throw new Error(
+        'Cannot pad PNG: padding is too small.'
+      );
+    }
+
+    const chunk = createPngTextChunk(
+      chunkDataLength
+    );
+
+    const iendIndex =
+      bytes.length - 12;
+
+    const output = new Uint8Array(
+      bytes.length + chunk.length
+    );
+
+    output.set(
+      bytes.slice(0, iendIndex),
+      0
+    );
+
+    output.set(
+      chunk,
+      iendIndex
+    );
+
+    output.set(
+      bytes.slice(iendIndex),
+      iendIndex + chunk.length
+    );
+
+    return new Blob(
+      [output],
+      { type: 'image/png' }
+    );
+  });
+}
+
+function createPngTextChunk(
+  dataLength: number
+): Uint8Array {
+  const chunk = new Uint8Array(
+    12 + dataLength
+  );
+
+  // Chunk length
+  chunk[0] =
+    (dataLength >> 24) & 0xff;
+
+  chunk[1] =
+    (dataLength >> 16) & 0xff;
+
+  chunk[2] =
+    (dataLength >> 8) & 0xff;
+
+  chunk[3] =
+    dataLength & 0xff;
+
+  // Chunk type: tEXt
+  chunk[4] = 0x74;
+  chunk[5] = 0x45;
+  chunk[6] = 0x58;
+  chunk[7] = 0x74;
+
+  // Leave the text data as zero bytes.
+  // CRC is calculated below.
+  const crc = crc32(
+    chunk.slice(4, 8 + dataLength)
+  );
+
+  chunk[8] =
+    (crc >>> 24) & 0xff;
+
+  chunk[9] =
+    (crc >>> 16) & 0xff;
+
+  chunk[10] =
+    (crc >>> 8) & 0xff;
+
+  chunk[11] =
+    crc & 0xff;
+
+  return chunk;
+}
+
+function crc32(
+  bytes: Uint8Array
+): number {
+  let crc = 0xffffffff;
+
+  for (const byte of bytes) {
+    crc ^= byte;
+
+    for (let bit = 0; bit < 8; bit++) {
+      crc =
+        (crc >>> 1) ^
+        (crc & 1
+          ? 0xedb88320
+          : 0);
+    }
+  }
+
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
 function replaceExtension(
   fileName: string,
   extension: string
@@ -352,4 +521,4 @@ function replaceExtension(
   }
 
   return `${fileName.slice(0, lastDot)}.${extension}`;
-}
+};
