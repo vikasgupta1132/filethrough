@@ -19,6 +19,25 @@
 
     <input id="photo" name="passportPhoto" type="file" accept=".png">
 
+<p id="status">No file selected.</p>
+
+<script>
+    const input = document.getElementById('photo');
+    const status = document.getElementById('status');
+
+    input.addEventListener('change', () => {
+        const file = input.files?.[0];
+
+        if (!file) {
+            status.textContent = 'No file selected.';
+            return;
+        }
+
+        status.textContent =
+            `Page sees: ${file.name} | ${file.type} | ${file.size} bytes`;
+    });
+</script>
+
 </body>
 
 </html>

@@ -109,6 +109,22 @@ export default defineContentScript({
       );
     }
   }
+  replaceInputFile(input, finalFile);
+
+  input.dispatchEvent(
+  new Event('change', {
+    bubbles: true,
+  })
+);
+
+console.log(
+  '[FileThrough] Final file injected',
+  {
+    name: finalFile.name,
+    type: finalFile.type,
+    sizeBytes: finalFile.size,
+  }
+);
 }
 
         }
@@ -117,6 +133,17 @@ export default defineContentScript({
         }
       });
     }
+
+    function replaceInputFile(
+  input: HTMLInputElement,
+  file: File
+) {
+  const dataTransfer = new DataTransfer();
+
+  dataTransfer.items.add(file);
+
+  input.files = dataTransfer.files;
+}
 
     function scanForFileInputs(root: ParentNode = document) {
       const inputs =
