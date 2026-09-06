@@ -3,9 +3,10 @@ export async function compressImage(
   options: {
     minBytes?: number;
     maxBytes?: number;
+    format?: 'jpeg' | 'png' | 'webp';
   }
 ): Promise<File> {
-  const { minBytes, maxBytes } = options;
+  const {minBytes,maxBytes,format = 'jpeg',} = options;
 
   if (!file.type.startsWith('image/')) {
     throw new Error(
@@ -56,7 +57,7 @@ export async function compressImage(
     minBytes !== undefined &&
     file.size < minBytes
   ) {
-    const blob = await canvasToBlob(canvas, 1);
+    const blob = await canvasToBlob(canvas, 1, format);
 
     console.log(
       '[FileThrough] Minimum-size attempt:',
@@ -72,30 +73,33 @@ export async function compressImage(
       blob.size >= minBytes &&
       (maxBytes === undefined || blob.size <= maxBytes)
     ) {
-      return createJpegFile(file, blob);
+      return createCompressedFile(file, blob, format);
     }
+
+   if (
+  blob.size < minBytes &&
+  (maxBytes === undefined || blob.size <= maxBytes)
+) {
+  if (format === 'jpeg') {
+    const paddedBlob =
+      await padJpegToMinimum(
+        blob,
+        minBytes
+      );
 
     if (
-      blob.size < minBytes &&
-      (maxBytes === undefined || blob.size <= maxBytes)
+      paddedBlob.size >= minBytes &&
+      (maxBytes === undefined ||
+        paddedBlob.size <= maxBytes)
     ) {
-      const paddedBlob =
-        await padJpegToMinimum(
-          blob,
-          minBytes
-        );
-
-      if (
-        paddedBlob.size >= minBytes &&
-        (maxBytes === undefined ||
-          paddedBlob.size <= maxBytes)
-      ) {
-        return createJpegFile(
-          file,
-          paddedBlob
-        );
-      }
+      return createCompressedFile(
+        file,
+        paddedBlob,
+        format
+      );
     }
+  }
+}
 
     throw new Error(
       `Unable to produce an image between ${minBytes} and ${
@@ -120,7 +124,8 @@ export async function compressImage(
 
     const blob = await canvasToBlob(
       canvas,
-      quality
+      quality,
+      format
     );
 
     console.log(
@@ -158,18 +163,34 @@ export async function compressImage(
     );
   }
 
-  return createJpegFile(file, bestBlob);
+  return createCompressedFile(file, bestBlob, format);
 }
 
-function createJpegFile(
+function createCompressedFile(
   originalFile: File,
-  blob: Blob
+  blob: Blob,
+  format: 'jpeg' | 'png' | 'webp'
 ): File {
+  const extension =
+    format === 'jpeg'
+      ? 'jpg'
+      : format;
+
+  const mimeType =
+    format === 'jpeg'
+      ? 'image/jpeg'
+      : format === 'png'
+        ? 'image/png'
+        : 'image/webp';
+
   return new File(
     [blob],
-    replaceExtension(originalFile.name, 'jpg'),
+    replaceExtension(
+      originalFile.name,
+      extension
+    ),
     {
-      type: 'image/jpeg',
+      type: mimeType,
       lastModified: Date.now(),
     }
   );
@@ -202,14 +223,24 @@ function loadImage(
 
 function canvasToBlob(
   canvas: HTMLCanvasElement,
-  quality: number
+  quality: number,
+  format: 'jpeg' | 'png' | 'webp'
 ): Promise<Blob> {
   return new Promise((resolve, reject) => {
+    const mimeType =
+      format === 'jpeg'
+        ? 'image/jpeg'
+        : format === 'png'
+          ? 'image/png'
+          : 'image/webp';
+
     canvas.toBlob(
       (blob) => {
         if (!blob) {
           reject(
-            new Error('Failed to create JPEG.')
+            new Error(
+              `Failed to create ${format} image.`
+            )
           );
 
           return;
@@ -217,8 +248,10 @@ function canvasToBlob(
 
         resolve(blob);
       },
-      'image/jpeg',
-      quality
+      mimeType,
+      format === 'png'
+        ? undefined
+        : quality
     );
   });
 }

@@ -90,6 +90,7 @@ export default defineContentScript({
         {
           minBytes: plan.compress.minBytes,
           maxBytes: plan.compress.maxBytes,
+          format: plan.compress.format,
         }
       );
 

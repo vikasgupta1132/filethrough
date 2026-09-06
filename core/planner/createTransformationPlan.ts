@@ -54,12 +54,12 @@ export function createTransformationPlan(
     // File size
     // ----------------------------------------
 
-    if (
-        (constraints.minBytes !== undefined &&
-            file.sizeBytes < constraints.minBytes) ||
-        (constraints.maxBytes !== undefined &&
-            file.sizeBytes > constraints.maxBytes)
-    ) {
+if (
+    (constraints.minBytes !== undefined &&
+        file.sizeBytes < constraints.minBytes) ||
+    (constraints.maxBytes !== undefined &&
+        file.sizeBytes > constraints.maxBytes)
+) {
     plan.compress = {
         ...(constraints.minBytes !== undefined && {
             minBytes: constraints.minBytes,
@@ -68,6 +68,10 @@ export function createTransformationPlan(
         ...(constraints.maxBytes !== undefined && {
             maxBytes: constraints.maxBytes,
         }),
+
+        format: chooseCompressionFormat(
+            constraints.allowedFormats
+        ),
     };
 }
 
@@ -98,4 +102,30 @@ function chooseTargetFormat(
     }
 
     return undefined;
+}
+
+function chooseCompressionFormat(
+    allowedFormats?: string[]
+): 'jpeg' | 'png' | 'webp' {
+    const normalized =
+        allowedFormats?.map((format) =>
+            format.toLowerCase()
+        ) ?? [];
+
+    if (
+        normalized.includes('jpeg') ||
+        normalized.includes('jpg')
+    ) {
+        return 'jpeg';
+    }
+
+    if (normalized.includes('png')) {
+        return 'png';
+    }
+
+    if (normalized.includes('webp')) {
+        return 'webp';
+    }
+
+    return 'jpeg';
 }
