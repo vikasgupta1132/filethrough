@@ -38,7 +38,10 @@ export default defineContentScript({
         '[FileThrough] Upload constraints',
         constraints
       );
-      input.addEventListener('change', async () => {
+      input.addEventListener('change', async (event) => {
+        if (event.isTrusted === false) {
+  return;
+}
         const file = input.files?.[0];
 
         if (!file) {
