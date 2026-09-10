@@ -1,3 +1,4 @@
+import type { FileProcessedMessage } from '../core/messages';
 import { parseConstraints } from '../core/parser/parseConstraints';
 import { extractUploadContext } from '../core/detector/extractUploadContext';
 import { inspectFile } from '../core/inspector/inspectFile';
@@ -128,6 +129,16 @@ console.log(
     sizeBytes: finalFile.size,
   }
 );
+const message: FileProcessedMessage = {
+  type: 'file-processed',
+  file: {
+    name: finalFile.name,
+    type: finalFile.type,
+    sizeBytes: finalFile.size,
+  },
+};
+
+browser.runtime.sendMessage(message);
 }
 
         }
