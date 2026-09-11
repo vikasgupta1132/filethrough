@@ -25,9 +25,11 @@ browser.runtime
     <div className="app">
       <h1>FileThrough</h1>
 
-      <p className="status">
-        ● Active
-      </p>
+<p className="status">
+  {result?.changed
+    ? '● Processed'
+    : '● Already compliant'}
+</p>
 
       <p className="description">
         Automatically prepares files for upload requirements.

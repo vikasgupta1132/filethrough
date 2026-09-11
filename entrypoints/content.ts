@@ -1,4 +1,7 @@
-import type { FileProcessedMessage } from '../core/messages';
+import type {
+  FileProcessedMessage,
+  FileProcessingFailedMessage,
+} from '../core/messages';
 import { parseConstraints } from '../core/parser/parseConstraints';
 import { extractUploadContext } from '../core/detector/extractUploadContext';
 import { inspectFile } from '../core/inspector/inspectFile';
@@ -70,6 +73,7 @@ export default defineContentScript({
   let transformedFile = file;
   let finalFile = file;
   let finalInfo = fileInfo;
+  let processingSucceeded = true;
 
   try {
     transformedFile =
@@ -86,12 +90,27 @@ export default defineContentScript({
     finalFile = transformedFile;
     finalInfo = transformedInfo;
   }
-  catch (error) {
-    console.error(
-      '[FileThrough] Transformation failed',
-      error
-    );
-  }
+catch (error) {
+  console.error(
+    '[FileThrough] Transformation failed',
+    error
+  );
+
+  processingSucceeded = false;
+
+  const message: FileProcessingFailedMessage = {
+    type: 'file-processing-failed',
+    original: fileInfo,
+    error:
+      error instanceof Error
+        ? error.message
+        : 'Unknown transformation error.',
+  };
+
+  browser.runtime.sendMessage(message);
+
+  return;
+}
 
   if (plan.compress) {
     try {
@@ -112,12 +131,27 @@ export default defineContentScript({
         finalInfo
       );
     }
-    catch (error) {
-      console.error(
-        '[FileThrough] Compression failed',
-        error
-      );
-    }
+catch (error) {
+  console.error(
+    '[FileThrough] Compression failed',
+    error
+  );
+
+  processingSucceeded = false;
+
+  const message: FileProcessingFailedMessage = {
+    type: 'file-processing-failed',
+    original: fileInfo,
+    error:
+      error instanceof Error
+        ? error.message
+        : 'Unknown compression error.',
+  };
+
+  browser.runtime.sendMessage(message);
+
+  return;
+}
   }
 
   replaceInputFile(input, finalFile);
@@ -137,11 +171,17 @@ export default defineContentScript({
     }
   );
 
-  const message: FileProcessedMessage = {
-    type: 'file-processed',
-    original: fileInfo,
-    final: finalInfo,
-  };
+const message: FileProcessedMessage = {
+  type: 'file-processed',
+  changed:
+    fileInfo.name !== finalInfo.name ||
+    fileInfo.mimeType !== finalInfo.mimeType ||
+    fileInfo.sizeBytes !== finalInfo.sizeBytes ||
+    fileInfo.width !== finalInfo.width ||
+    fileInfo.height !== finalInfo.height,
+  original: fileInfo,
+  final: finalInfo,
+};
 
   browser.runtime.sendMessage(message);
 }
