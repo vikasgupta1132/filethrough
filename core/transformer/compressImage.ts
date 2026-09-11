@@ -1,3 +1,4 @@
+import UPNG from '@upng/upng-js';
 export async function compressImage(
   file: File,
   options: {
@@ -148,11 +149,17 @@ export async function compressImage(
     const quality =
       (low + high) / 2;
 
-    const blob = await canvasToBlob(
-      canvas,
-      quality,
-      format
-    );
+const blob =
+    format === 'png'
+        ? await canvasToPngBlob(
+            canvas,
+            256
+        )
+        : await canvasToBlob(
+            canvas,
+            quality,
+            format
+        );
 
     console.log(
       `[FileThrough] Compression attempt ${attempt + 1}:`,
@@ -194,6 +201,38 @@ export async function compressImage(
     bestBlob,
     format
   );
+}
+
+async function canvasToPngBlob(
+    canvas: HTMLCanvasElement,
+    colorCount: number
+): Promise<Blob> {
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+        throw new Error('Could not create canvas context.');
+    }
+
+    const imageData = context.getImageData(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    const buffer = UPNG.encode(
+        [imageData.data.buffer],
+        canvas.width,
+        canvas.height,
+        colorCount
+    );
+
+    return new Blob(
+        [buffer],
+        {
+            type: 'image/png',
+        }
+    );
 }
 
 function createCompressedFile(

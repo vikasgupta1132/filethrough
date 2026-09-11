@@ -26,9 +26,11 @@ browser.runtime
       <h1>FileThrough</h1>
 
 <p className="status">
-  {result?.changed
-    ? '● Processed'
-    : '● Already compliant'}
+  {result
+    ? result.changed
+      ? '● Processed'
+      : '● Already compliant'
+    : '● No file processed yet'}
 </p>
 
       <p className="description">
