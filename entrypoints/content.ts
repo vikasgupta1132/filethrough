@@ -66,8 +66,10 @@ export default defineContentScript({
           //4.Create transformation plan
           const plan = createTransformationPlan(fileInfo, constraints);
           console.log('[FileThrough] Transformation plan', plan);
-          if (Object.keys(plan).length > 0) {
+       if (Object.keys(plan).length > 0) {
   let transformedFile = file;
+  let finalFile = file;
+  let finalInfo = fileInfo;
 
   try {
     transformedFile =
@@ -80,12 +82,16 @@ export default defineContentScript({
       '[FileThrough] Transformed file',
       transformedInfo
     );
+
+    finalFile = transformedFile;
+    finalInfo = transformedInfo;
   }
   catch (error) {
-    console.error('[FileThrough] Transformation failed', error);
+    console.error(
+      '[FileThrough] Transformation failed',
+      error
+    );
   }
-
-  let finalFile = transformedFile;
 
   if (plan.compress) {
     try {
@@ -98,7 +104,7 @@ export default defineContentScript({
         }
       );
 
-      const finalInfo =
+      finalInfo =
         await inspectFile(finalFile);
 
       console.log(
@@ -113,32 +119,31 @@ export default defineContentScript({
       );
     }
   }
+
   replaceInputFile(input, finalFile);
 
   input.dispatchEvent(
-  new Event('change', {
-    bubbles: true,
-  })
-);
+    new Event('change', {
+      bubbles: true,
+    })
+  );
 
-console.log(
-  '[FileThrough] Final file injected',
-  {
-    name: finalFile.name,
-    type: finalFile.type,
-    sizeBytes: finalFile.size,
-  }
-);
-const message: FileProcessedMessage = {
-  type: 'file-processed',
-  file: {
-    name: finalFile.name,
-    type: finalFile.type,
-    sizeBytes: finalFile.size,
-  },
-};
+  console.log(
+    '[FileThrough] Final file injected',
+    {
+      name: finalFile.name,
+      type: finalFile.type,
+      sizeBytes: finalFile.size,
+    }
+  );
 
-browser.runtime.sendMessage(message);
+  const message: FileProcessedMessage = {
+    type: 'file-processed',
+    original: fileInfo,
+    final: finalInfo,
+  };
+
+  browser.runtime.sendMessage(message);
 }
 
         }

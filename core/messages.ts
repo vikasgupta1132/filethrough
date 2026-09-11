@@ -1,11 +1,11 @@
+import type { FileInfo } from './inspector/inspectFile';
+
 export interface FileProcessedMessage {
   type: 'file-processed';
 
-  file: {
-    name: string;
-    type: string;
-    sizeBytes: number;
-  };
+  original: FileInfo;
+
+  final: FileInfo;
 }
 
 export interface GetLastProcessedFileMessage {

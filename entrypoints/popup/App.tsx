@@ -6,19 +6,19 @@ import type {
 import './App.css';
 
 function App() {
-  const [file, setFile] =
-    useState<FileProcessedMessage['file'] | null>(null);
+const [result, setResult] =
+  useState<FileProcessedMessage | null>(null);
 
   useEffect(() => {
     const message: GetLastProcessedFileMessage = {
       type: 'get-last-processed-file',
     };
 
-    browser.runtime
-      .sendMessage(message)
-      .then((result) => {
-        setFile(result);
-      });
+browser.runtime
+  .sendMessage(message)
+  .then((result) => {
+    setResult(result);
+  });
   }, []);
 
   return (
@@ -33,12 +33,22 @@ function App() {
         Automatically prepares files for upload requirements.
       </p>
 
-      {file && (
+      {result && (
         <div>
           <p>Last processed file:</p>
-          <p>{file.name}</p>
-          <p>{file.type}</p>
-          <p>{file.sizeBytes} bytes</p>
+          <p>{result.final.name}</p>
+          <p>{result.final.mimeType}</p>
+          <p>{result.final.sizeBytes} bytes</p>
+          <p>
+  Size: {result.original.sizeBytes} bytes →{' '}
+  {result.final.sizeBytes} bytes
+</p>
+<p>
+  Dimensions:{' '}
+  {result.original.width} × {result.original.height}
+  {' → '}
+  {result.final.width} × {result.final.height}
+</p>
         </div>
       )}
     </div>

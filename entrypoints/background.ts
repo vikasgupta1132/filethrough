@@ -3,8 +3,8 @@ import type {
   GetLastProcessedFileMessage,
 } from '../core/messages';
 
-let lastProcessedFile:
-  FileProcessedMessage['file'] | null = null;
+let lastProcessedResult:
+  FileProcessedMessage | null = null;
 
 export default defineBackground(() => {
   browser.runtime.onMessage.addListener(
@@ -13,11 +13,11 @@ export default defineBackground(() => {
         return;
       }
 
-      lastProcessedFile = message.file;
+      lastProcessedResult = message;
 
       console.log(
         '[FileThrough] Background received processed file',
-        message.file
+        message.final
       );
     }
   );
@@ -28,7 +28,7 @@ export default defineBackground(() => {
         return;
       }
 
-      return Promise.resolve(lastProcessedFile);
+      return Promise.resolve(lastProcessedResult);
     }
   );
 });
