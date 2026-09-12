@@ -153,7 +153,101 @@ catch (error) {
   return;
 }
   }
+const finalValidation = validateFile(
+  finalInfo,
+  constraints
+);
 
+console.log(
+  '[FileThrough] Final validation result',
+  finalValidation
+);
+
+if (!finalValidation.isValid) {
+  const hasSizeIssue =
+    finalValidation.issues.some(
+      (issue) =>
+        issue.type === 'size-too-large' ||
+        issue.type === 'size-too-small'
+    );
+
+  if (
+    hasSizeIssue &&
+    constraints.minBytes !== undefined &&
+    constraints.maxBytes !== undefined
+  ) {
+    try {
+      finalFile = await compressImage(
+        finalFile,
+        {
+          minBytes: constraints.minBytes,
+          maxBytes: constraints.maxBytes,
+          format:
+            finalFile.type === 'image/png'
+              ? 'png'
+              : finalFile.type === 'image/webp'
+                ? 'webp'
+                : 'jpeg',
+        }
+      );
+
+      finalInfo =
+        await inspectFile(finalFile);
+
+      console.log(
+        '[FileThrough] Final compression result',
+        finalInfo
+      );
+    }
+    catch (error) {
+      console.error(
+        '[FileThrough] Final compression failed',
+        error
+      );
+
+      const message: FileProcessingFailedMessage = {
+        type: 'file-processing-failed',
+        original: fileInfo,
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Unknown final compression error.',
+      };
+
+      browser.runtime.sendMessage(message);
+
+      return;
+    }
+  }
+
+  const revalidation = validateFile(
+    finalInfo,
+    constraints
+  );
+
+  console.log(
+    '[FileThrough] Revalidation result',
+    revalidation
+  );
+
+  if (!revalidation.isValid) {
+    console.error(
+      '[FileThrough] Final file does not satisfy requirements',
+      revalidation.issues
+    );
+
+    const message: FileProcessingFailedMessage = {
+      type: 'file-processing-failed',
+      original: fileInfo,
+      error:
+        'The processed file does not satisfy the upload requirements.',
+    };
+
+    browser.runtime.sendMessage(message);
+
+    return;
+  }
+}
   replaceInputFile(input, finalFile);
 
   input.dispatchEvent(

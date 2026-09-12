@@ -141,61 +141,97 @@ export async function compressImage(
     );
   }
 
-  let low = 0.05;
-  let high = 1;
-  let bestBlob: Blob | null = null;
+let bestBlob: Blob | null = null;
 
-  for (let attempt = 0; attempt < 10; attempt++) {
-    const quality =
-      (low + high) / 2;
+if (format === 'png') {
+    let lowColors = 2;
+    let highColors = 256;
 
-const blob =
-    format === 'png'
-        ? await canvasToPngBlob(
+    for (let attempt = 0; attempt < 10; attempt++) {
+        const colorCount = Math.floor(
+            (lowColors + highColors) / 2
+        );
+
+        const blob = await canvasToPngBlob(
             canvas,
-            256
-        )
-        : await canvasToBlob(
+            colorCount
+        );
+
+        console.log(
+            `[FileThrough] PNG compression attempt ${attempt + 1}:`,
+            {
+                colorCount,
+                sizeBytes: blob.size,
+                minBytes,
+                maxBytes,
+            }
+        );
+
+        if (blob.size > maxBytes) {
+            highColors = colorCount - 1;
+            continue;
+        }
+
+        if (
+            minBytes !== undefined &&
+            blob.size < minBytes
+        ) {
+            lowColors = colorCount + 1;
+            continue;
+        }
+
+        bestBlob = blob;
+        break;
+    }
+} else {
+    let low = 0.05;
+    let high = 1;
+
+    for (let attempt = 0; attempt < 10; attempt++) {
+        const quality =
+            (low + high) / 2;
+
+        const blob = await canvasToBlob(
             canvas,
             quality,
             format
         );
 
-    console.log(
-      `[FileThrough] Compression attempt ${attempt + 1}:`,
-      {
-        quality,
-        sizeBytes: blob.size,
-        minBytes,
-        maxBytes,
-      }
-    );
+        console.log(
+            `[FileThrough] Compression attempt ${attempt + 1}:`,
+            {
+                quality,
+                sizeBytes: blob.size,
+                minBytes,
+                maxBytes,
+            }
+        );
 
-    if (blob.size > maxBytes) {
-      high = quality;
-      continue;
+        if (blob.size > maxBytes) {
+            high = quality;
+            continue;
+        }
+
+        if (
+            minBytes !== undefined &&
+            blob.size < minBytes
+        ) {
+            low = quality;
+            continue;
+        }
+
+        bestBlob = blob;
+        break;
     }
+}
 
-    if (
-      minBytes !== undefined &&
-      blob.size < minBytes
-    ) {
-      low = quality;
-      continue;
-    }
-
-    bestBlob = blob;
-    low = quality;
-  }
-
-  if (!bestBlob) {
+if (!bestBlob) {
     throw new Error(
-      `Unable to produce an image between ${
-        minBytes ?? 0
-      } and ${maxBytes} bytes.`
+        `Unable to produce an image between ${
+            minBytes ?? 0
+        } and ${maxBytes} bytes.`
     );
-  }
-
+}
   return createCompressedFile(
     file,
     bestBlob,
