@@ -73,7 +73,7 @@ export default defineContentScript({
   let transformedFile = file;
   let finalFile = file;
   let finalInfo = fileInfo;
-  let processingSucceeded = true;
+
 
   try {
     transformedFile =
@@ -95,8 +95,6 @@ catch (error) {
     '[FileThrough] Transformation failed',
     error
   );
-
-  processingSucceeded = false;
 
   const message: FileProcessingFailedMessage = {
     type: 'file-processing-failed',
@@ -136,8 +134,6 @@ catch (error) {
     '[FileThrough] Compression failed',
     error
   );
-
-  processingSucceeded = false;
 
   const message: FileProcessingFailedMessage = {
     type: 'file-processing-failed',

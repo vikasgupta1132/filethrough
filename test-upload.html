@@ -2,46 +2,39 @@
 <html>
 
 <head>
-    <title>FileThrough Test</title>
+    <title>FileThrough Dynamic Input Test</title>
 </head>
 
 <body>
 
-    <h1>Passport Application</h1>
+    <h1>Dynamic Upload Test</h1>
 
-    <label for="photo">Upload Photograph</label>
+    <div id="upload-area">
+        <p>Upload field will appear in 2 seconds...</p>
+    </div>
 
-<p>
-  Photograph must be PNG.
-File size: 20 KB to 100 KB
-Dimensions: 1646 x 1024 pixels.
-</p>
+    <script>
+        setTimeout(() => {
+            const area = document.getElementById('upload-area');
 
-<input
-    id="photo"
-    name="passportPhoto"
-    type="file"
-    accept=".png"
->
+            area.innerHTML = `
+                <label for="photo">Upload Photograph</label>
 
-<p id="status">No file selected.</p>
+                <p>
+                    Photograph must be JPEG.
+                    File size: 20 KB to 100 KB
+                    Dimensions: 200 x 230 pixels.
+                </p>
 
-<script>
-    const input = document.getElementById('photo');
-    const status = document.getElementById('status');
-
-    input.addEventListener('change', () => {
-        const file = input.files?.[0];
-
-        if (!file) {
-            status.textContent = 'No file selected.';
-            return;
-        }
-
-        status.textContent =
-            `Page sees: ${file.name} | ${file.type} | ${file.size} bytes`;
-    });
-</script>
+                <input
+                    id="photo"
+                    name="passportPhoto"
+                    type="file"
+                    accept=".jpg,.jpeg"
+                >
+            `;
+        }, 2000);
+    </script>
 
 </body>
 
