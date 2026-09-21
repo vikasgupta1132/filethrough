@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://localhost:3000/@id/virtual:wxt-inline-script?FV4Dkd3rOhdzKGzidlMXkjXlfp9vKu7IZB71e-yFG-I" type="module"></script>
+
+  <script type="module" src="http://localhost:3000/@vite/client"></script>
+<script src="http://localhost:3000/@id/virtual:wxt-html-plugins" type="module"></script>
+    <title>PDF Transformation Test</title>  <script type="module" crossorigin="" src="/chunks/reload-html-DhldcNkT.js"></script>
+</head>
+<body>
+    <h1>PDF to Image Transformation Test</h1>
+    
+    <div>
+        <label for="pdf-input">Upload PDF:</label>
+        <input id="pdf-input" name="pdf" type="file" accept="application/pdf">
+    </div>
+    
+    <div id="result" style="margin-top: 20px; display: none;">
+        <h2>Result</h2>
+        <p id="result-info"></p>
+        <img id="result-image" style="max-width: 100%; border: 1px solid #ccc;">
+    </div>
+
+    <script type="module" src="http://localhost:3000/entrypoints/test-pdf/main.ts"></script>
+</body>
+</html>

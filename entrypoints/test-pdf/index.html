@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PDF Transformation Test</title>
+</head>
+<body>
+    <h1>PDF to Image Transformation Test</h1>
+    
+    <div>
+        <label for="pdf-input">Upload PDF:</label>
+        <input
+            id="pdf-input"
+            name="pdf"
+            type="file"
+            accept="application/pdf"
+        >
+    </div>
+    
+    <div id="result" style="margin-top: 20px; display: none;">
+        <h2>Result</h2>
+        <p id="result-info"></p>
+        <img id="result-image" style="max-width: 100%; border: 1px solid #ccc;" />
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>

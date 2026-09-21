@@ -1,7 +1,11 @@
 import type { TransformationPlan } from '../planner/types';
 import * as pdfjsLib from 'pdfjs-dist';
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+if (typeof window !== 'undefined' && typeof browser !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = browser.runtime.getURL('pdfjs/pdf.worker.min.js');
+} else {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+}
 
 export async function transformPdf(
     file: File,
