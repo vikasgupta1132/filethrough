@@ -1,8 +1,8 @@
 {
-  "name": "wxt-react-starter",
-  "description": "manifest.json description",
+  "name": "filethrough",
+  "description": "Automatically prepares files for upload requirements - compresses images, converts formats, and resizes to meet platform constraints",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -12,10 +12,14 @@
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
     "compile": "tsc --noEmit",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "website:build": "cd website && npm run build",
+    "website:dev": "cd website && npm run dev"
   },
   "dependencies": {
     "@upng/upng-js": "^2.2.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },
@@ -27,5 +31,22 @@
     "typescript": "^5.9.3",
     "web-ext": "^10.5.0",
     "wxt": "^0.21.3"
-  }
+  },
+  "author": "FileThrough Team",
+  "license": "MIT",
+  "homepage": "https://filethrough.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/filethrough"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/filethrough/issues"
+  },
+  "keywords": [
+    "browser-extension",
+    "file-upload",
+    "image-compression",
+    "format-conversion",
+    "productivity"
+  ]
 }

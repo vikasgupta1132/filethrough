@@ -1,6 +1,70 @@
 import { defineConfig } from 'wxt';
 
-// See https://wxt.dev/api/config.html
 export default defineConfig({
   modules: ['@wxt-dev/module-react'],
+  manifest: {
+    name: 'FileThrough',
+    description: 'Automatically prepares files for upload requirements - compresses images, converts formats, and resizes to meet platform constraints',
+    version: '1.0.0',
+    author: 'FileThrough Team',
+    homepage_url: 'https://filethrough.io',
+    icons: {
+      16: 'icon/16.png',
+      32: 'icon/32.png',
+      48: 'icon/48.png',
+      96: 'icon/96.png',
+      128: 'icon/128.png',
+    },
+    permissions: ['storage', 'activeTab', 'scripting'],
+    host_permissions: ['<all_urls>'],
+    action: {
+      default_popup: 'popup.html',
+      default_icon: {
+        16: 'icon/16.png',
+        32: 'icon/32.png',
+        48: 'icon/48.png',
+        96: 'icon/96.png',
+        128: 'icon/128.png',
+      },
+    },
+    options_page: 'options.html',
+    options_ui: {
+      page: 'options.html',
+      open_in_tab: true,
+    },
+    background: {
+      service_worker: 'background.js',
+      type: 'module',
+    },
+    web_accessible_resources: [
+      {
+        resources: ['icon/*.png'],
+        matches: ['<all_urls>'],
+      },
+    ],
+  },
+  hooks: {
+    'build:manifestGenerated': (wxt, manifest) => {
+      // Fix default_title
+      if (manifest.action) {
+        manifest.action.default_title = 'FileThrough';
+      }
+      // Remove duplicate content scripts
+      if (manifest.content_scripts) {
+        const seen = new Set();
+        manifest.content_scripts = manifest.content_scripts.filter((cs) => {
+          const key = JSON.stringify(cs);
+          if (seen.has(key)) {
+            return false;
+          }
+          seen.add(key);
+          return true;
+        });
+      }
+      // Remove options_ui if options_page is set (they conflict)
+      if (manifest.options_page && manifest.options_ui) {
+        delete manifest.options_ui;
+      }
+    },
+  },
 });

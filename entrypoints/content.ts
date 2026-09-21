@@ -9,6 +9,8 @@ import { validateFile } from '../core/validator/validateFile';
 import { createTransformationPlan } from '../core/planner/createTransformationPlan';
 import { transformImage } from '../core/transformer/transformImage';
 import { compressImage } from '../core/transformer/compressImage';
+import { transformPdf } from '../core/transformer/transformPdf';
+import { compressPdf } from '../core/transformer/compressPdf';
 export default defineContentScript({
   matches: ['<all_urls>'],
 
@@ -69,15 +71,17 @@ export default defineContentScript({
           //4.Create transformation plan
           const plan = createTransformationPlan(fileInfo, constraints);
           console.log('[FileThrough] Transformation plan', plan);
-       if (Object.keys(plan).length > 0) {
+if (Object.keys(plan).length > 0) {
   let transformedFile = file;
   let finalFile = file;
   let finalInfo = fileInfo;
 
-
   try {
-    transformedFile =
-      await transformImage(file, plan);
+    if (file.type === 'application/pdf') {
+      transformedFile = await transformPdf(file, plan);
+    } else {
+      transformedFile = await transformImage(file, plan);
+    }
 
     const transformedInfo =
       await inspectFile(transformedFile);
@@ -112,14 +116,18 @@ catch (error) {
 
   if (plan.compress) {
     try {
-      finalFile = await compressImage(
-        transformedFile,
-        {
+      if (transformedFile.type === 'application/pdf') {
+        finalFile = await compressPdf(transformedFile, {
           minBytes: plan.compress.minBytes,
           maxBytes: plan.compress.maxBytes,
-          format: plan.compress.format,
-        }
-      );
+        });
+      } else {
+        finalFile = await compressImage(transformedFile, {
+          minBytes: plan.compress.minBytes,
+          maxBytes: plan.compress.maxBytes,
+          format: (plan.compress.format as 'jpeg' | 'png' | 'webp') ?? 'jpeg',
+        });
+      }
 
       finalInfo =
         await inspectFile(finalFile);
@@ -167,25 +175,29 @@ if (!finalValidation.isValid) {
         issue.type === 'size-too-small'
     );
 
-  if (
+if (
     hasSizeIssue &&
     constraints.minBytes !== undefined &&
     constraints.maxBytes !== undefined
   ) {
     try {
-      finalFile = await compressImage(
-        finalFile,
-        {
+      if (finalFile.type === 'application/pdf') {
+        finalFile = await compressPdf(finalFile, {
+          minBytes: constraints.minBytes,
+          maxBytes: constraints.maxBytes,
+        });
+      } else {
+        finalFile = await compressImage(finalFile, {
           minBytes: constraints.minBytes,
           maxBytes: constraints.maxBytes,
           format:
             finalFile.type === 'image/png'
               ? 'png'
               : finalFile.type === 'image/webp'
-                ? 'webp'
-                : 'jpeg',
-        }
-      );
+              ? 'webp'
+              : 'jpeg',
+        });
+      }
 
       finalInfo =
         await inspectFile(finalFile);

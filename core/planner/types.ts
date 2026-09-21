@@ -9,6 +9,6 @@ export interface TransformationPlan {
     compress?: {
         minBytes?: number;
         maxBytes?: number;
-    format?: 'jpeg' | 'png' | 'webp';
+    format?: 'jpeg' | 'png' | 'webp' | 'pdf';
     };
 }
