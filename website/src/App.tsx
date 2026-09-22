@@ -10,9 +10,16 @@ function App() {
             </svg>
             <span>FileThrough</span>
           </div>
-          <a href="https://chromewebstore.google.com/detail/filethrough" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-            Install from Chrome Web Store
-          </a>
+          <div className="nav-links">
+            <a href="/about" className="nav-link">About</a>
+            <a href="/faq" className="nav-link">FAQ</a>
+            <a href="/contact" className="nav-link">Contact</a>
+            <a href="/privacy" className="nav-link">Privacy Policy</a>
+            <a href="/terms" className="nav-link">Terms of Service</a>
+            <a href="https://chromewebstore.google.com/detail/filethrough" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+              Install from Chrome Web Store
+            </a>
+          </div>
         </nav>
         <div className="hero-content container">
           <div className="hero-text">
