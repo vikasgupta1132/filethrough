@@ -2,6 +2,7 @@ import type {
   FileProcessedMessage,
   FileProcessingFailedMessage,
   GetLastProcessedFileMessage,
+  DownloadLastProcessedFileMessage,
 } from '../core/messages';
 
 let lastProcessedResult:
@@ -48,6 +49,31 @@ export default defineBackground(() => {
       }
 
       return Promise.resolve(lastProcessedResult);
+    }
+  );
+  browser.runtime.onMessage.addListener(
+    async (message: DownloadLastProcessedFileMessage) => {
+      if (message.type !== 'download-last-processed-file') {
+        return;
+      }
+
+      if (!lastProcessedResult?.fileData) {
+        console.error('[FileThrough] No file data available for download');
+        return;
+      }
+
+      const blob = new Blob([lastProcessedResult.fileData], {
+        type: lastProcessedResult.final.mimeType,
+      });
+      const url = URL.createObjectURL(blob);
+
+      await browser.downloads.download({
+        url,
+        filename: lastProcessedResult.final.name,
+        saveAs: true,
+      });
+
+      URL.revokeObjectURL(url);
     }
   );
 });

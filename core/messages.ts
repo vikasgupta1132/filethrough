@@ -10,6 +10,7 @@ export interface FileProcessedMessage {
 
   final: FileInfo;
 
+  fileData: ArrayBuffer;
 }
 export interface FileProcessingFailedMessage {
   type: 'file-processing-failed';
@@ -20,4 +21,7 @@ export interface FileProcessingFailedMessage {
 }
 export interface GetLastProcessedFileMessage {
   type: 'get-last-processed-file';
+}
+export interface DownloadLastProcessedFileMessage {
+  type: 'download-last-processed-file';
 }

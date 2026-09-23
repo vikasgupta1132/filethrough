@@ -273,17 +273,20 @@ if (
     }
   );
 
-const message: FileProcessedMessage = {
-  type: 'file-processed',
-  changed:
-    fileInfo.name !== finalInfo.name ||
-    fileInfo.mimeType !== finalInfo.mimeType ||
-    fileInfo.sizeBytes !== finalInfo.sizeBytes ||
-    fileInfo.width !== finalInfo.width ||
-    fileInfo.height !== finalInfo.height,
-  original: fileInfo,
-  final: finalInfo,
-};
+const fileData = await finalFile.arrayBuffer();
+
+  const message: FileProcessedMessage = {
+    type: 'file-processed',
+    changed:
+      fileInfo.name !== finalInfo.name ||
+      fileInfo.mimeType !== finalInfo.mimeType ||
+      fileInfo.sizeBytes !== finalInfo.sizeBytes ||
+      fileInfo.width !== finalInfo.width ||
+      fileInfo.height !== finalInfo.height,
+    original: fileInfo,
+    final: finalInfo,
+    fileData,
+  };
 
   browser.runtime.sendMessage(message);
 }

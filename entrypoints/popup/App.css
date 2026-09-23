@@ -90,13 +90,52 @@ main {
   border-radius: 10px;
 }
 
-.details h3 {
-  margin: 0 0 12px;
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.details-header h3 {
+  margin: 0;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #64748b;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #2563eb;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.download-btn:hover {
+  background: #1d4ed8;
+}
+
+.download-btn svg {
+  flex-shrink: 0;
+}
+
+.details dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  font-size: 13px;
 }
 
 .details dl {

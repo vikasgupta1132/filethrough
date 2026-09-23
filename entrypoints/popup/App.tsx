@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import type {
   FileProcessedMessage,
   GetLastProcessedFileMessage,
+  DownloadLastProcessedFileMessage,
 } from '../../core/messages';
 import './App.css';
 
@@ -24,6 +25,13 @@ function App() {
 
   const openWebsite = () => {
     browser.tabs.create({ url: 'https://filethrough.io' });
+  };
+
+  const downloadLastProcessed = () => {
+    const message: DownloadLastProcessedFileMessage = {
+      type: 'download-last-processed-file',
+    };
+    browser.runtime.sendMessage(message);
   };
 
   return (
@@ -63,7 +71,21 @@ function App() {
 
         {result && (
           <div className="details">
-            <h3>Last Processed</h3>
+            <div className="details-header">
+              <h3>Last Processed</h3>
+              <button
+                onClick={downloadLastProcessed}
+                className="download-btn"
+                title="Download processed file"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Download
+              </button>
+            </div>
             <dl>
               <div>
                 <dt>Name</dt>

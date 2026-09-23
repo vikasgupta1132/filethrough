@@ -16,8 +16,8 @@ declare module "wxt/browser" {
     | "/pdfjs/pdf.worker.min.js"
     | "/popup.html"
     | "/test-pdf.html"
-    | "/website/assets/index-BJK-ZIvy.css"
-    | "/website/assets/index-jIPlNh3t.js"
+    | "/website/assets/index-BjxV3CHR.css"
+    | "/website/assets/index-BYwqNMjh.js"
     | "/website/index.html"
     | "/wxt.svg"
   type HtmlPublicPath = Extract<PublicPath, `${string}.html`>
