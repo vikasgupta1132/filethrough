@@ -177,8 +177,8 @@ if (!finalValidation.isValid) {
 
 if (
     hasSizeIssue &&
-    constraints.minBytes !== undefined &&
-    constraints.maxBytes !== undefined
+    (constraints.minBytes !== undefined ||
+    constraints.maxBytes !== undefined)
   ) {
     try {
       if (finalFile.type === 'application/pdf') {

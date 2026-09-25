@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FileThrough Privacy Policy - Your files never leave your device. All processing happens locally." />
+  <title>Privacy Policy - FileThrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .legal-page main {
+      max-width: 800px;
+      padding: 60px 24px;
+      margin: 0 auto;
+    }
+    .legal-page section {
+      margin-bottom: 40px;
+    }
+    .legal-page h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      margin-top: 40px;
+    }
+    .legal-page h2:first-child {
+      margin-top: 0;
+    }
+    .legal-page h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      margin-top: 24px;
+    }
+    .legal-page p {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .legal-page ul, .legal-page ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+    .legal-page li {
+      font-size: 16px;
+      color: var(--color-text-muted);
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+    .legal-page code {
+      background: var(--color-bg-alt);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+    .last-updated {
+      color: var(--color-text-muted);
+      font-size: 14px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body class="legal-page">
+  <header class="hero">
+    <nav class="nav container">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#2563eb" />
+          <path d="M8 16L14 22L24 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>FileThrough</span>
+      </div>
+      <a href="index.html" class="btn btn-secondary">Back to Home</a>
+    </nav>
+    <div class="hero-content container" style="text-align: left; max-width: 800px; margin-top: 40px;">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: September 2026</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Overview</h2>
+      <p>FileThrough ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how our browser extension handles information when you use our service.</p>
+      <p><strong>Key point: FileThrough processes all files locally in your browser. No files, images, or documents are ever uploaded to our servers or any third-party servers.</strong></p>
+    </section>
+
+    <section>
+      <h2>Data We Collect</h2>
+      <h3>No Personal Data Collected</h3>
+      <p>FileThrough does not collect, store, or transmit any personal identifiable information, including:</p>
+      <ul>
+        <li>Your name, email, or contact information</li>
+        <li>Your browsing history or website activity</li>
+        <li>Files you process (images, PDFs, documents)</li>
+        <li>Your IP address or location data</li>
+      </ul>
+
+      <h3>Local Storage Only</h3>
+      <p>The extension stores your preferences locally in your browser using the <code>chrome.storage.sync</code> API:</p>
+      <ul>
+        <li>Enable/disable automatic processing</li>
+        <li>Maximum file size limit</li>
+        <li>Custom transformation rules</li>
+        <li>Auto-process toggle</li>
+      </ul>
+      <p>This data never leaves your browser and is only used to configure the extension's behavior.</p>
+    </section>
+
+    <section>
+      <h2>How FileThrough Works</h2>
+      <ol>
+        <li><strong>Detection:</strong> The extension detects file input elements on web pages you visit.</li>
+        <li><strong>Analysis:</strong> When you select a file, it reads the file locally using the File API.</li>
+        <li><strong>Processing:</strong> All transformations (compression, format conversion, resizing) happen entirely in your browser using WebAssembly and Canvas APIs.</li>
+        <li><strong>Replacement:</strong> The processed file replaces the original in the file input, ready for upload.</li>
+      </ol>
+      <p>At no point does any file data leave your device.</p>
+    </section>
+
+    <section>
+      <h2>Permissions</h2>
+      <p>FileThrough requests the following permissions:</p>
+      <ul>
+        <li><strong>storage:</strong> To save your preferences locally</li>
+        <li><strong>activeTab:</strong> To access the current tab when you interact with the extension</li>
+        <li><strong>scripting:</strong> To inject content scripts for file detection</li>
+        <li><strong>host_permissions (&lt;all_urls&gt;):</strong> To detect file inputs on any website you visit</li>
+      </ul>
+      <p>These permissions are used solely for the extension's core functionality.</p>
+    </section>
+
+    <section>
+      <h2>Third-Party Services</h2>
+      <p>FileThrough does not use any third-party analytics, tracking, or advertising services. The extension makes no network requests except for:</p>
+      <ul>
+        <li>Checking for extension updates (handled by Chrome)</li>
+        <li>Loading the options page (local extension resource)</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Open Source</h2>
+      <p>FileThrough is open source. You can review the complete source code at <a href="https://github.com/yourusername/filethrough" target="_blank" rel="noopener noreferrer">our GitHub repository</a>.</p>
+    </section>
+
+    <section>
+      <h2>Children's Privacy</h2>
+      <p>FileThrough does not knowingly collect information from children under 13. Since we collect no personal information at all, this is inherently satisfied.</p>
+    </section>
+
+    <section>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last updated" date.</p>
+    </section>
+
+    <section>
+      <h2>Contact Us</h2>
+      <p>If you have questions about this Privacy Policy, please contact us:</p>
+      <ul>
+        <li>Email: privacy@filethrough.io</li>
+        <li>GitHub Issues: <a href="https://github.com/yourusername/filethrough/issues" target="_blank" rel="noopener noreferrer">github.com/yourusername/filethrough/issues</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 FileThrough. Built with privacy in mind.</p>
+    </div>
+  </footer>
+</body>
+</html>
