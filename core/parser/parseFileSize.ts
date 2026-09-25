@@ -86,6 +86,10 @@ export function parseFileSize(text: string): UploadConstraints {
         /(?:file\s+)?(?:must\s+be\s+)?under\s+(\d+(?:\.\d+)?)\s*(kb|mb|gb)/i,
 
         /less\s+than\s+(\d+(?:\.\d+)?)\s*(kb|mb|gb)/i,
+
+        /(?:max|maximum)\s*[:\.]?\s*(\d+(?:\.\d+)?)\s*(kb|mb|gb)/i,
+
+        /up\s+to\s+(\d+(?:\.\d+)?)\s*(kb|mb|gb)/i,
     ];
 
     for (const pattern of maxPatterns) {

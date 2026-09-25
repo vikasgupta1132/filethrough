@@ -15,9 +15,11 @@ export function parseDimensions(
     // Image size: 200 X 230
 
     const patterns = [
-        /(?:dimensions?|image\s+dimensions?|image\s+size)\s*:?\s*(\d+)\s*[x×]\s*(\d+)\s*(?:px|pixels?)?/i,
+        /(?:dimensions?|image\s+dimensions?|image\s+size|recommended\s+size|size)\s*:?\s*(\d+)\s*[x×X]\s*(\d+)\s*(?:px|pixels?)?/i,
 
-        /(\d+)\s*[x×]\s*(\d+)\s*(?:px|pixels?)/i,
+        /(\d+)\s*[x×X]\s*(\d+)\s*(?:px|pixels?|image)/i,
+
+        /(\d+)\s*[x×X]\s*(\d+)/i,
     ];
 
     for (const pattern of patterns) {

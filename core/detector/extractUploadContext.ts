@@ -25,13 +25,36 @@ export function extractUploadContext(
         label = parentLabel?.textContent?.trim() || null;
     }
 
-    // For now, inspect the input's parent container.
+    // Extract nearby text by searching parent containers
+    let nearbyText = '';
+    
+    // Try immediate parent first
     const parent = input.parentElement;
+    if (parent) {
+        nearbyText = parent.innerText?.replace(/\s+/g, ' ').trim() || '';
+    }
 
-    const nearbyText =
-        parent?.innerText
-            ?.replace(/\s+/g, ' ')
-            .trim() || '';
+    // If the immediate parent has limited text, try going up the DOM tree
+    if (nearbyText.length < 20) {
+        let currentElement: HTMLElement | null = parent;
+        let attempts = 0;
+        const maxAttempts = 5;
+
+        while (currentElement && attempts < maxAttempts) {
+            currentElement = currentElement.parentElement;
+            attempts++;
+
+            if (currentElement) {
+                const text = currentElement.innerText?.replace(/\s+/g, ' ').trim() || '';
+                
+                // Use this text if it's more informative
+                if (text.length > nearbyText.length && text.length < 500) {
+                    nearbyText = text;
+                    break;
+                }
+            }
+        }
+    }
 
     return {
         label,
