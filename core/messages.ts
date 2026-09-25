@@ -10,7 +10,7 @@ export interface FileProcessedMessage {
 
   final: FileInfo;
 
-  fileData: ArrayBuffer;
+  fileData: number[];
 }
 export interface FileProcessingFailedMessage {
   type: 'file-processing-failed';

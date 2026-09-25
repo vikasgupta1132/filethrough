@@ -274,6 +274,7 @@ if (
   );
 
 const fileData = await finalFile.arrayBuffer();
+  console.log('[FileThrough] Content: File data size:', fileData.byteLength);
 
   const message: FileProcessedMessage = {
     type: 'file-processed',
@@ -285,9 +286,10 @@ const fileData = await finalFile.arrayBuffer();
       fileInfo.height !== finalInfo.height,
     original: fileInfo,
     final: finalInfo,
-    fileData,
+    fileData: Array.from(new Uint8Array(fileData)),
   };
 
+  console.log('[FileThrough] Content: Sending file-processed message');
   browser.runtime.sendMessage(message);
 }
 

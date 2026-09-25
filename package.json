@@ -48,5 +48,8 @@
     "image-compression",
     "format-conversion",
     "productivity"
-  ]
+  ],
+  "overrides": {
+    "entities": "7.0.1"
+  }
 }

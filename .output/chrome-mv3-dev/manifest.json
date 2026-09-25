@@ -16,6 +16,7 @@
     "storage",
     "activeTab",
     "scripting",
+    "downloads",
     "tabs"
   ],
   "host_permissions": [
@@ -40,7 +41,9 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "icon/*.png"
+        "icon/*.png",
+        "pdfjs/*.js",
+        "pdfjs/*.mjs"
       ],
       "matches": [
         "<all_urls>"

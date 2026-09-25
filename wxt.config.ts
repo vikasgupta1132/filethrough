@@ -38,7 +38,7 @@ export default defineConfig({
     },
     web_accessible_resources: [
       {
-        resources: ['icon/*.png'],
+        resources: ['icon/*.png', 'pdfjs/*.js', 'pdfjs/*.mjs'],
         matches: ['<all_urls>'],
       },
     ],

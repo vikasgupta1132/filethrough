@@ -27,11 +27,37 @@ function App() {
     browser.tabs.create({ url: 'https://filethrough.io' });
   };
 
-  const downloadLastProcessed = () => {
-    const message: DownloadLastProcessedFileMessage = {
-      type: 'download-last-processed-file',
-    };
-    browser.runtime.sendMessage(message);
+  const downloadLastProcessed = async () => {
+    console.log('[FileThrough] Popup: Getting file data for download');
+    try {
+      const message: GetLastProcessedFileMessage = {
+        type: 'get-last-processed-file',
+      };
+      const result = await browser.runtime.sendMessage(message);
+      
+      if (!result?.fileData) {
+        console.error('[FileThrough] Popup: No file data available for download');
+        return;
+      }
+
+      console.log('[FileThrough] Popup: Creating blob and downloading, fileData length:', result.fileData.length);
+      const uint8Array = new Uint8Array(result.fileData);
+      const blob = new Blob([uint8Array], {
+        type: result.final.mimeType,
+      });
+      const url = URL.createObjectURL(blob);
+
+      await browser.downloads.download({
+        url,
+        filename: result.final.name,
+        saveAs: true,
+      });
+
+      URL.revokeObjectURL(url);
+      console.log('[FileThrough] Popup: Download initiated successfully');
+    } catch (error) {
+      console.error('[FileThrough] Popup: Download failed:', error);
+    }
   };
 
   return (
