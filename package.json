@@ -2,7 +2,7 @@
   "name": "filethrough",
   "description": "Automatically prepares files for upload requirements - compresses images, converts formats, and resizes to meet platform constraints",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
