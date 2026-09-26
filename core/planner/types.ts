@@ -9,6 +9,9 @@ export interface TransformationPlan {
     compress?: {
         minBytes?: number;
         maxBytes?: number;
-    format?: 'jpeg' | 'png' | 'webp' | 'pdf';
+        format?: 'jpeg' | 'png' | 'webp' | 'pdf';
     };
+
+    // New: Remove alpha channel from PNG
+    removeAlpha?: boolean;
 }

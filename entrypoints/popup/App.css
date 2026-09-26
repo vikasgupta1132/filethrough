@@ -40,10 +40,14 @@ main {
 
 .status-indicator {
   flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.status-indicator span {
+  display: block;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  margin-top: 2px;
 }
 
 .status-indicator .idle {
@@ -119,23 +123,19 @@ main {
   color: #ffffff;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background 0.15s;
 }
 
 .download-btn:hover {
   background: #1d4ed8;
 }
 
-.download-btn svg {
-  flex-shrink: 0;
+.download-btn:active {
+  transform: scale(0.98);
 }
 
-.details dl {
-  margin: 0;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 8px 12px;
-  font-size: 13px;
+.download-btn svg {
+  flex-shrink: 0;
 }
 
 .details dl {
@@ -154,7 +154,7 @@ main {
 .details dd {
   margin: 0;
   color: #1e293b;
-  font-family: monospace;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
   word-break: break-all;
 }
 
@@ -196,7 +196,10 @@ footer {
 .link-btn:hover {
   background: #e2e8f0;
   color: #1e293b;
-  text-decoration: none;
+}
+
+.link-btn:active {
+  transform: scale(0.98);
 }
 
 .link-btn svg {
@@ -208,4 +211,20 @@ footer {
   font-size: 11px;
   color: #94a3b8;
   text-align: center;
+}
+
+/* Loading state optimization */
+.details {
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

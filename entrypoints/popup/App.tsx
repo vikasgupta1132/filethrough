@@ -1,21 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import type {
   FileProcessedMessage,
   GetLastProcessedFileMessage,
-  DownloadLastProcessedFileMessage,
 } from '../../core/messages';
 import './App.css';
 
 function App() {
   const [result, setResult] = useState<FileProcessedMessage | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // Try to load cached data first for instant display
+    const cached = sessionStorage.getItem('filethrough-last-result');
+    if (cached) {
+      try {
+        setResult(JSON.parse(cached));
+        setIsLoading(false);
+      } catch (e) {
+        // Ignore parse errors
+      }
+    }
+
+    // Then fetch fresh data in background
     const message: GetLastProcessedFileMessage = {
       type: 'get-last-processed-file',
     };
 
-    browser.runtime.sendMessage(message).then((result) => {
-      setResult(result);
+    browser.runtime.sendMessage(message).then((freshResult) => {
+      setResult(freshResult);
+      setIsLoading(false);
+      // Cache for next popup open
+      if (freshResult) {
+        sessionStorage.setItem('filethrough-last-result', JSON.stringify(freshResult));
+      }
+    }).catch(() => {
+      setIsLoading(false);
     });
   }, []);
 
@@ -24,23 +43,20 @@ function App() {
   };
 
   const openWebsite = () => {
-    browser.tabs.create({ url: 'https://filethrough.io' });
+    browser.tabs.create({ url: 'https://getfilethrough.com' });
   };
 
   const downloadLastProcessed = async () => {
-    console.log('[FileThrough] Popup: Getting file data for download');
     try {
       const message: GetLastProcessedFileMessage = {
         type: 'get-last-processed-file',
       };
       const result = await browser.runtime.sendMessage(message);
-      
+
       if (!result?.fileData) {
-        console.error('[FileThrough] Popup: No file data available for download');
         return;
       }
 
-      console.log('[FileThrough] Popup: Creating blob and downloading, fileData length:', result.fileData.length);
       const uint8Array = new Uint8Array(result.fileData);
       const blob = new Blob([uint8Array], {
         type: result.final.mimeType,
@@ -54,11 +70,34 @@ function App() {
       });
 
       URL.revokeObjectURL(url);
-      console.log('[FileThrough] Popup: Download initiated successfully');
     } catch (error) {
-      console.error('[FileThrough] Popup: Download failed:', error);
+      console.error('[FileThrough] Download failed:', error);
     }
   };
+
+  // Memoize computed values to avoid recalculation on every render
+  const { statusClass, statusTitle, statusSubtitle, reductionPercent } = useMemo(() => {
+    if (!result) {
+      return {
+        statusClass: 'idle',
+        statusTitle: 'Ready to Process',
+        statusSubtitle: 'FileThrough will automatically optimize files on upload pages',
+        reductionPercent: 0,
+      };
+    }
+
+    const changed = result.changed;
+    return {
+      statusClass: changed ? 'processed' : 'compliant',
+      statusTitle: changed ? 'File Processed' : 'Already Compliant',
+      statusSubtitle: changed
+        ? 'Your file has been optimized for upload'
+        : 'No changes needed - file meets requirements',
+      reductionPercent: changed
+        ? Math.round((1 - result.final.sizeBytes / result.original.sizeBytes) * 100)
+        : 0,
+    };
+  }, [result]);
 
   return (
     <div className="app">
@@ -75,27 +114,15 @@ function App() {
       <main>
         <div className="status-card">
           <div className="status-indicator">
-            <span className={result ? (result.changed ? 'processed' : 'compliant') : 'idle'} />
+            <span className={statusClass} />
           </div>
           <div className="status-text">
-            <p className="status-title">
-              {result
-                ? result.changed
-                  ? 'File Processed'
-                  : 'Already Compliant'
-                : 'Ready to Process'}
-            </p>
-            <p className="status-subtitle">
-              {result
-                ? result.changed
-                  ? 'Your file has been optimized for upload'
-                  : 'No changes needed - file meets requirements'
-                : 'FileThrough will automatically optimize files on upload pages'}
-            </p>
+            <p className="status-title">{statusTitle}</p>
+            <p className="status-subtitle">{statusSubtitle}</p>
           </div>
         </div>
 
-        {result && (
+        {!isLoading && result && (
           <div className="details">
             <div className="details-header">
               <h3>Last Processed</h3>
@@ -113,33 +140,23 @@ function App() {
               </button>
             </div>
             <dl>
-              <div>
-                <dt>Name</dt>
-                <dd>{result.final.name}</dd>
-              </div>
-              <div>
-                <dt>Type</dt>
-                <dd>{result.final.mimeType}</dd>
-              </div>
-              <div>
-                <dt>Size</dt>
-                <dd>
-                  {formatBytes(result.original.sizeBytes)} → {formatBytes(result.final.sizeBytes)}
-                  {result.changed && (
-                    <span className="reduction">
-                      (-{Math.round((1 - result.final.sizeBytes / result.original.sizeBytes) * 100)}%)
-                    </span>
-                  )}
-                </dd>
-              </div>
-              <div>
-                <dt>Dimensions</dt>
-                <dd>
-                  {result.original.width} × {result.original.height}
-                  {' → '}
-                  {result.final.width} × {result.final.height}
-                </dd>
-              </div>
+              <dt>Name</dt>
+              <dd>{result.final.name}</dd>
+              <dt>Type</dt>
+              <dd>{result.final.mimeType}</dd>
+              <dt>Size</dt>
+              <dd>
+                {formatBytes(result.original.sizeBytes)} → {formatBytes(result.final.sizeBytes)}
+                {result.changed && (
+                  <span className="reduction">(-{reductionPercent}%)</span>
+                )}
+              </dd>
+              <dt>Dimensions</dt>
+              <dd>
+                {result.original.width} × {result.original.height}
+                {' → '}
+                {result.final.width} × {result.final.height}
+              </dd>
             </dl>
           </div>
         )}

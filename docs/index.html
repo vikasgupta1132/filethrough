@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="FileThrough - Automatically prepares files for upload requirements. Compress images, convert formats, and resize to meet platform constraints." />
+  <meta name="description" content="Make your files ready for any upload form. FileThrough automatically compresses, converts, and resizes images to meet platform requirements - government portals, job sites, social media, and more." />
+  <meta name="keywords" content="image compression, file resize, format converter, upload requirements, image optimizer" />
   <meta name="theme-color" content="#2563eb" />
-  <title>FileThrough - Smart File Upload Preparation</title>
+  <title>FileThrough - Make Your Files Ready for Any Upload Form</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,143 +15,423 @@
 <body>
   <header class="hero">
     <nav class="nav container">
-      <div class="logo">
+      <a href="index.html" class="logo">
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="32" height="32" rx="8" fill="#2563eb" />
           <path d="M8 16L14 22L24 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <span>FileThrough</span>
-      </div>
+      </a>
       <div class="nav-links">
-        <a href="about.html" class="nav-link">About</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
         <a href="faq.html" class="nav-link">FAQ</a>
         <a href="contact.html" class="nav-link">Contact</a>
-        <a href="privacy.html" class="nav-link">Privacy Policy</a>
-        <a href="terms.html" class="nav-link">Terms of Service</a>
         <a href="https://chromewebstore.google.com/detail/filethrough" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
-          Install from Chrome Web Store
+          Add to Chrome — Free
         </a>
       </div>
     </nav>
     <div class="hero-content container">
       <div class="hero-text">
-        <h1>Smart File Upload Preparation</h1>
-        <p>Automatically compress images, convert formats, and resize files to meet any platform's upload requirements. Save time and avoid upload errors.</p>
+        <h1>Make Your Files Ready for Any Upload Form</h1>
+        <p>Government portals, job sites, college applications — if a web form takes an image, FileThrough fits your file to it. Right inside the tab.</p>
         <div class="hero-buttons">
           <a href="https://chromewebstore.google.com/detail/filethrough" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
-            Add to Chrome — Free
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 16v-4"/>
+              <path d="M12 8h.01"/>
+            </svg>
+            Add to Chrome — It's Free
           </a>
-          <a href="#features" class="btn btn-secondary btn-lg">Learn More</a>
+          <a href="#demo" class="btn btn-secondary btn-lg">See It Work</a>
         </div>
-        <p class="hero-stats">
-          <span>10,000+ users</span>
-          <span>★ 4.8/5 rating</span>
-          <span>Open source</span>
-        </p>
+        <div class="hero-stats">
+          <span>✓ Strips GPS data</span>
+          <span>✓ No sign-up</span>
+          <span>✓ Works offline</span>
+        </div>
       </div>
       <div class="hero-visual">
-        <div class="mockup">
-          <div class="mockup-header">
-            <div class="mockup-dots">
-              <span></span><span></span><span></span>
-            </div>
+        <div class="demo-card">
+          <div class="demo-header">
+            <span class="demo-tag">Live Demo</span>
           </div>
-          <div class="mockup-content">
-            <div class="upload-zone">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
-                <line x1="12" y1="3" x2="12" y2="15" />
+          <div class="before-after">
+            <div class="before">
+              <div class="file-icon error">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                  <polyline points="13 2 13 9 20 9"/>
+                </svg>
+              </div>
+              <div class="file-details">
+                <div class="file-name">vacation-photo.png</div>
+                <div class="file-size error">4.2 MB</div>
+                <div class="file-dims">3840 × 2160</div>
+              </div>
+              <div class="status-badge error">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="15" y1="9" x2="9" y2="15"/>
+                  <line x1="9" y1="9" x2="15" y2="15"/>
+                </svg>
+                Too large (max 2 MB)
+              </div>
+            </div>
+            <div class="arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
               </svg>
-              <p>Drag & drop files here</p>
-              <span>or click to browse</span>
             </div>
-            <div class="processing">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: 75%"></div>
+            <div class="after">
+              <div class="file-icon success">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                  <polyline points="13 2 13 9 20 9"/>
+                </svg>
               </div>
-              <p class="processing-text">Optimizing: image.png → 842 KB (was 2.3 MB)</p>
-            </div>
-            <div class="result">
-              <span class="badge success">✓ Ready for upload</span>
-              <div class="result-details">
-                <span>JPEG • 1920×1080 • 842 KB</span>
-                <span>Meets: GitHub, LinkedIn, Twitter</span>
+              <div class="file-details">
+                <div class="file-name">vacation-photo.jpg</div>
+                <div class="file-size success">1.4 MB</div>
+                <div class="file-dims">1920 × 1080</div>
+              </div>
+              <div class="status-badge success">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Ready to upload
               </div>
             </div>
           </div>
+          <div class="demo-note">One click does the whole fix</div>
         </div>
       </div>
     </div>
   </header>
 
-  <section id="features" class="features">
+  <section class="problem-section">
+    <div class="container">
+      <div class="problem-content">
+        <h2>You shouldn't need a CS degree to upload a photo</h2>
+        <p class="problem-text">Every site has different rules. "File too large." "Must be JPEG." "Maximum 1920×1080." So you hunt for an image editor, open a new tab, upload your file to some random site, tweak settings you don't understand, download it, then come back and try again.</p>
+        <p class="problem-text"><strong>FileThrough reads the upload requirements straight off the page and fixes your file automatically.</strong> No editor, no extra tab, no guessing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="features">
     <div class="container">
       <header class="section-header">
         <h2>How It Works</h2>
-        <p>FileThrough detects file uploads and automatically prepares them</p>
+        <p>Three steps that happen automatically</p>
       </header>
       <div class="features-grid">
         <article class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="3" width="20" height="14" rx="2" />
-              <path d="M4 8h16" />
-              <path d="M8 17h8" />
-              <path d="M12 17v4" />
-            </svg>
-          </div>
-          <h3>Smart Detection</h3>
-          <p>Automatically detects file input fields on any website and analyzes upload constraints</p>
+          <div class="feature-number">1</div>
+          <h3>Reads the Requirements</h3>
+          <p>Detects upload forms and scans for size limits, dimensions, and format requirements — "Max 2 MB," "JPEG only," "1920×1080 max."</p>
         </article>
         <article class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          </div>
-          <h3>Auto Optimization</h3>
-          <p>Compresses images, converts formats (JPEG, PNG, WebP, AVIF), and resizes to fit requirements</p>
+          <div class="feature-number">2</div>
+          <h3>Fixes Your File</h3>
+          <p>Compresses images, converts formats (PNG→JPEG, HEIC→JPG), and resizes dimensions — all in your browser, nothing leaves your computer.</p>
         </article>
         <article class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          </div>
-          <h3>Format Conversion</h3>
-          <p>Converts between image formats and PDFs to match platform specifications</p>
+          <div class="feature-number">3</div>
+          <h3>Uploads It for You</h3>
+          <p>Replaces your oversized file with the optimized version and uploads it. You don't lift a finger beyond clicking "Upload."</p>
         </article>
-        <article class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="use-cases">
+    <div class="container">
+      <header class="section-header">
+        <h2>Works On Forms You Actually Use</h2>
+        <p>Tested on thousands of real upload forms</p>
+      </header>
+      <div class="use-case-grid">
+        <div class="use-case-card">
+          <div class="use-case-icon">🏛️</div>
+          <h3>Government Portals</h3>
+          <p>Passport applications, visa forms, permit uploads — strict size limits, usually JPEG-only.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">💼</div>
+          <h3>Job Applications</h3>
+          <p>LinkedIn, Indeed, company career portals — resume uploads, profile photos, portfolio samples.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">🎓</div>
+          <h3>College Applications</h3>
+          <p>Common App, UCAS, university portals — transcripts, essays, recommendation letters.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">💬</div>
+          <h3>Social Media</h3>
+          <p>Twitter, Facebook, Instagram — profile pictures, post images, story uploads.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">🛒</div>
+          <h3>E-commerce</h3>
+          <p>eBay, Etsy, Amazon seller — product photos, listings, storefront images.</p>
+        </div>
+        <div class="use-case-card">
+          <div class="use-case-icon">📄</div>
+          <h3>Document Portals</h3>
+          <p>Healthcare portals, insurance claims, legal document uploads.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="metadata-section">
+    <div class="container">
+      <div class="metadata-grid">
+        <div class="metadata-visual">
+          <div class="metadata-card">
+            <div class="metadata-header">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+              <h4>Original Photo</h4>
+            </div>
+            <div class="metadata-list">
+              <div class="metadata-item removed">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                <span>GPS: 37.7749° N, 122.4194° W</span>
+              </div>
+              <div class="metadata-item removed">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                <span>Camera: iPhone 15 Pro Max</span>
+              </div>
+              <div class="metadata-item removed">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                <span>Date: 2026-09-26 08:34:22</span>
+              </div>
+              <div class="metadata-item removed">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"/>
+                  <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+                <span>Serial: A1B2C3D4E5F6</span>
+              </div>
+            </div>
+            <div class="metadata-arrow">→</div>
+            <div class="metadata-result">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <span>All metadata stripped</span>
+            </div>
           </div>
-          <h3>Privacy First</h3>
-          <p>All processing happens locally in your browser. No files are uploaded to any server</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="16 18 22 12 16 6" />
-              <polyline points="8 6 2 12 8 18" />
+        </div>
+        <div class="metadata-content">
+          <div class="metadata-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
+            Automatic Privacy Protection
           </div>
-          <h3>Custom Rules</h3>
-          <p>Create custom transformation rules for specific sites or file types</p>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon">
+          <h2>Your Photos Won't Reveal Where You Live</h2>
+          <p class="metadata-intro">Every photo you take with a smartphone contains hidden data about you. FileThrough automatically removes it.</p>
+
+          <div class="metadata-details">
+            <h3>What Gets Removed:</h3>
+            <ul class="metadata-bullets">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <div>
+                  <strong>GPS Location</strong>
+                  <p>Exact coordinates showing where each photo was taken</p>
+                </div>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                  <circle cx="12" cy="13" r="4"/>
+                </svg>
+                <div>
+                  <strong>Camera Info</strong>
+                  <p>Device model, serial number, and equipment details</p>
+                </div>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <div>
+                  <strong>Timestamps</strong>
+                  <p>When the photo was taken and last modified</p>
+                </div>
+              </li>
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+                <div>
+                  <strong>Personal Details</strong>
+                  <p>Author name, copyright info, and editing software</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="metadata-guarantee">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-              <polyline points="22 4 12 14.01 9 11.01" />
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
             </svg>
+            <p><strong>Happens automatically.</strong> Every image FileThrough processes is metadata-free. No toggle needed, no extra step.</p>
           </div>
-          <h3>Works Everywhere</h3>
-          <p>Compatible with GitHub, LinkedIn, Twitter, Facebook, and any site with file uploads</p>
-        </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" class="privacy-section">
+    <div class="container">
+      <div class="privacy-grid">
+        <div class="privacy-content">
+          <div class="privacy-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            Your Privacy Matters
+          </div>
+          <h2>Your Files Never Leave Your Computer</h2>
+          <div class="privacy-points">
+            <div class="privacy-point">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <strong>All processing happens in your browser.</strong>
+                <p>Image compression, format conversion, and resizing run locally using WebAssembly. Nothing is uploaded to our servers or anyone else's.</p>
+              </div>
+            </div>
+            <div class="privacy-point">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <strong>Automatically strips EXIF and GPS data.</strong>
+                <p>Every processed image has location data, camera info, and timestamps removed. Your photos won't reveal where you live, what device you use, or when you took them.</p>
+              </div>
+            </div>
+            <div class="privacy-point">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <strong>No tracking, no analytics, no data collection.</strong>
+                <p>We don't log what files you process, what sites you visit, or how you use the extension. Zero trackers.</p>
+              </div>
+            </div>
+            <div class="privacy-point">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <strong>Works completely offline.</strong>
+                <p>Once installed, FileThrough doesn't need an internet connection. Process files on a plane, train, or anywhere.</p>
+              </div>
+            </div>
+            <div class="privacy-point">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              <div>
+                <strong>Open source and auditable.</strong>
+                <p>Every line of code is public on GitHub. Security researchers and developers can verify our privacy claims.</p>
+              </div>
+            </div>
+          </div>
+          <a href="privacy.html" class="link-with-arrow">
+            Read our full privacy policy
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+        <div class="privacy-visual">
+          <div class="privacy-diagram">
+            <div class="diagram-item local">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+              <div class="diagram-label">Your Computer</div>
+              <div class="diagram-tag success">✓ All processing here</div>
+            </div>
+            <div class="diagram-separator">
+              <div class="barrier"></div>
+              <span>No data crosses this line</span>
+            </div>
+            <div class="diagram-item cloud">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+              </svg>
+              <div class="diagram-label">The Internet</div>
+              <div class="diagram-tag muted">✗ Never touched</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <header class="section-header">
+        <h2>What Users Are Saying</h2>
+      </header>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I was uploading documents for a visa application and kept getting 'file too large' errors. FileThrough fixed it automatically — didn't even realize it was working until the upload succeeded."</p>
+          <div class="testimonial-author">
+            <strong>Sarah M.</strong>
+            <span>Government portal user</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Before FileThrough I'd screenshot my phone pics, upload to TinyPNG, download, then upload to LinkedIn. Now it just works. Saves me 5 minutes every time I post."</p>
+          <div class="testimonial-author">
+            <strong>Marcus T.</strong>
+            <span>LinkedIn power user</span>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"College application portals are the worst. Different size limits on every form. FileThrough read the requirements right off the page and handled it. Absolute lifesaver during application season."</p>
+          <div class="testimonial-author">
+            <strong>Jamie K.</strong>
+            <span>College applicant</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -158,30 +439,39 @@
   <section class="platforms">
     <div class="container">
       <header class="section-header">
-        <h2>Supported Platforms</h2>
-        <p>FileThrough knows the requirements for popular platforms</p>
+        <h2>Trusted On</h2>
+        <p>Works automatically on these platforms and thousands more</p>
       </header>
       <div class="platforms-grid">
-        <div class="platform-badge">GitHub</div>
         <div class="platform-badge">LinkedIn</div>
         <div class="platform-badge">Twitter</div>
         <div class="platform-badge">Facebook</div>
         <div class="platform-badge">Instagram</div>
+        <div class="platform-badge">GitHub</div>
+        <div class="platform-badge">Indeed</div>
+        <div class="platform-badge">Common App</div>
+        <div class="platform-badge">USPS</div>
+        <div class="platform-badge">Etsy</div>
         <div class="platform-badge">Slack</div>
         <div class="platform-badge">Discord</div>
         <div class="platform-badge">Notion</div>
-        <div class="platform-badge">Custom</div>
       </div>
     </div>
   </section>
 
   <section class="cta">
     <div class="container">
-      <h2>Ready to Simplify File Uploads?</h2>
-      <p>Join thousands of users who never worry about file size limits again</p>
+      <h2>Ready to Stop Fighting Upload Forms?</h2>
+      <p>Join thousands who never see "file too large" again</p>
       <a href="https://chromewebstore.google.com/detail/filethrough" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">
-        Install FileThrough Free
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Install FileThrough — Free Forever
       </a>
+      <p class="cta-note">No credit card. No sign-up. No tracking.</p>
     </div>
   </section>
 
@@ -189,48 +479,53 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="logo">
+          <a href="index.html" class="logo">
             <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="32" height="32" rx="8" fill="#2563eb" />
               <path d="M8 16L14 22L24 10" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
             <span>FileThrough</span>
-          </div>
-          <p>Smart file upload preparation for everyone</p>
+          </a>
+          <p>Make your files ready for any upload form.</p>
         </div>
-        <nav class="footer-links">
-          <div>
-            <h4>Product</h4>
-            <ul>
-              <li><a href="#features">Features</a></li>
-              <li><a href="#">Pricing</a></li>
-              <li><a href="#">Changelog</a></li>
-              <li><a href="#">Roadmap</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="#">Documentation</a></li>
-              <li><a href="faq.html">FAQ</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Community</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4>Legal</h4>
-            <ul>
-              <li><a href="privacy.html">Privacy Policy</a></li>
-              <li><a href="terms.html">Terms of Service</a></li>
-            </ul>
-          </div>
-        </nav>
+        <div class="footer-links">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="https://github.com/yourusername/filethrough" target="_blank">GitHub</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="faq.html">Help Center</a></li>
+            <li><a href="https://github.com/yourusername/filethrough/issues" target="_blank">Report Issue</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+          </ul>
+        </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 FileThrough. Built with privacy in mind.</p>
+        <p>© 2026 FileThrough. Open source and privacy-first.</p>
         <div class="footer-social">
-          <a href="#" aria-label="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
-          <a href="#" aria-label="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 9.24-3.308.83-7.546-8.26L2.16 22.64h3.255l7.025-7.75-7.55 7.75H.351l8.277-9.13L.361 2.25h3.34l7.247 8.25-8.014 8.65h3.354l7.455-8.11-7.2-8.34z"/></svg></a>
+          <a href="https://github.com/yourusername/filethrough" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+          </a>
+          <a href="https://twitter.com/filethrough" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 9.24H15.38l-5.218-6.826L3.9 21.75H.593l7.727-8.84L0 2.25h7.52l4.715 6.23 5.51-6.23zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>

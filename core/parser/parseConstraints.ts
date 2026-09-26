@@ -4,23 +4,20 @@ import type { UploadConstraints } from './types';
 import { parseFileSize } from './parseFileSize';
 import { parseFormats } from './parseFormats';
 import { parseDimensions } from './parseDimensions';
+import { parseFileQuantity } from './parseFileQuantity';
 
 export function parseConstraints(
     context: UploadContext
 ): UploadConstraints {
     const sizeConstraints = parseFileSize(context.nearbyText);
-    const allowedFormats = parseFormats(context);
-    const dimensions = parseDimensions(context.nearbyText);
+    const formatConstraints = parseFormats(context);
+    const dimensionConstraints = parseDimensions(context.nearbyText);
+    const quantityConstraints = parseFileQuantity(context.nearbyText);
 
     return {
         ...sizeConstraints,
-
-        ...(allowedFormats.length > 0 && {
-            allowedFormats,
-        }),
-
-        ...(dimensions && {
-            dimensions,
-        }),
+        ...formatConstraints,
+        ...dimensionConstraints,
+        ...quantityConstraints,
     };
 }
