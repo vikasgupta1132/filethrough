@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <title>Page Not Found - FileThrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FS6RVM0XHY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FS6RVM0XHY');
+  </script>
+  <style>
+    .error-container {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .error-code {
+      font-size: 12rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #1fb6ff, #4e54c8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      line-height: 1;
+    }
+
+    .error-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 20px;
+    }
+
+    .error-description {
+      font-size: 1.25rem;
+      color: #64748b;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .btn-home {
+      display: inline-block;
+      background: linear-gradient(45deg, #1fb6ff, #4e54c8);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-home:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(31, 182, 255, 0.4);
+    }
+
+    .error-illustration {
+      margin: 40px 0;
+    }
+
+    @media (max-width: 768px) {
+      .error-code {
+        font-size: 8rem;
+      }
+
+      .error-title {
+        font-size: 2rem;
+      }
+
+      .error-description {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-container">
+    <div class="error-code">404</div>
+
+    <div class="error-illustration">
+      <img src="icon.svg" alt="FileThrough Icon" width="120" height="120" style="border-radius: 16px;" />
+    </div>
+
+    <h1 class="error-title">Oops! Page Not Found</h1>
+    <p class="error-description">
+      It looks like the page you're looking for doesn't exist or has been moved.
+      Don't worry, we'll help you get back on track.
+    </p>
+
+    <a href="index.html" class="btn-home">Go to Homepage</a>
+
+    <div style="margin-top: 40px; color: #94a3b8; font-size: 0.9rem;">
+      Or try one of these pages:<br>
+      • <a href="about.html" style="color: #1fb6ff; text-decoration: none;">About Us</a><br>
+      • <a href="faq.html" style="color: #1fb6ff; text-decoration: none;">FAQ</a><br>
+      • <a href="contact.html" style="color: #1fb6ff; text-decoration: none;">Contact Us</a>
+    </div>
+  </div>
+</body>
+</html>

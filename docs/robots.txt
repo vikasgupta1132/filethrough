@@ -1,0 +1,15 @@
+# Robots.txt for FileThrough Website
+# Specifies which parts of the site web crawlers can access
+
+# Allow all crawlers full access to the site
+User-agent: *
+Allow: /
+
+# Disallow access to any potential admin or private directories
+# (Currently none exist, but this is a good practice)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+
+# Sitemap location
+Sitemap: http://localhost:8000/sitemap.xml
