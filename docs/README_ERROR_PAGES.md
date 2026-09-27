@@ -14,7 +14,7 @@
 
 ### For Local Development (Python HTTP Server):
 The Python `http.server` module doesn't natively support custom error pages, but you can:
-1. Access error pages directly: `http://localhost:8000/404.html`
+1. Access error pages directly: `https://getfilethrough.com/404.html`
 2. Test broken links to see browser default 404 behavior
 3. For production deployment, configure your web server appropriately
 
@@ -55,9 +55,9 @@ error_page 500 /500.html;
 ```
 
 ## Testing:
-- Visit `http://localhost:8000/404.html` to see the 404 error page
-- Visit `http://localhost:8000/500.html` to see the 500 error page
-- Visit `http://localhost:8000/nonexistent-page` to see browser's default 404 (since Python server doesn't handle custom errors)
+- Visit `https://getfilethrough.com/404.html` to see the 404 error page
+- Visit `https://getfilethrough.com/500.html` to see the 500 error page
+- Visit `https://getfilethrough.com/nonexistent-page` to see browser's default 404 (since Python server doesn't handle custom errors)
 
 ## Design Notes:
 - Uses the same FileThrough icon (snail with gradient) as favicon and illustration

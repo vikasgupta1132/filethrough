@@ -12,4 +12,4 @@ Disallow: /private/
 Disallow: /tmp/
 
 # Sitemap location
-Sitemap: http://localhost:8000/sitemap.xml
+Sitemap: https://getfilethrough.com/sitemap.xml
