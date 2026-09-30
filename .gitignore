@@ -1,4 +1,5 @@
-.output
+# Output directory (build artifacts)
+.output/
 
 # wrangler files
 .wrangler
@@ -6,3 +7,6 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# Node modules
+node_modules/

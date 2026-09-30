@@ -5,9 +5,9 @@ export default defineConfig({
   manifest: {
     name: 'FileThrough',
     description: 'Automatically prepares files for upload requirements - compresses images, converts formats, and resizes to meet platform constraints',
-    version: '1.0.0',
-    author: 'FileThrough Team',
-    homepage_url: 'https://filethrough.io',
+    version: '1.1.0',
+    author: { email: 'vikasgupta2623@gmail.com' },
+    homepage_url: 'https://getfilethrough.com',
     icons: {
       16: 'icon/16.png',
       32: 'icon/32.png',
@@ -15,7 +15,7 @@ export default defineConfig({
       96: 'icon/96.png',
       128: 'icon/128.png',
     },
-    permissions: ['storage', 'activeTab', 'scripting', 'downloads'],
+    permissions: ['storage', 'activeTab', 'downloads'],
     host_permissions: ['<all_urls>'],
     action: {
       default_popup: 'popup.html',
