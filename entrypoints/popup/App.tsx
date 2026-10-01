@@ -180,7 +180,6 @@ function App() {
             Website
           </button>
         </div>
-        <p className="version">v1.0.0</p>
       </footer>
     </div>
   );

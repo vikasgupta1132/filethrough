@@ -15,7 +15,7 @@ export default defineConfig({
       96: 'icon/96.png',
       128: 'icon/128.png',
     },
-    permissions: ['storage', 'activeTab', 'downloads'],
+    permissions: ['storage', 'downloads'],
     host_permissions: ['<all_urls>'],
     action: {
       default_popup: 'popup.html',

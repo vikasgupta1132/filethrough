@@ -140,14 +140,13 @@ Files selected through supported upload fields are processed in the browser rath
 
 The extension does not require an external file-processing service to perform its core transformations.
 
-For more information, see the [FileThrough Privacy Policy](https://filethrough.io/privacy).
+For more information, see the [FileThrough Privacy Policy](https://getfilethrough.com/privacy).
 
 ## Permissions
 
 The current extension manifest requests the following permissions:
 
 * **`storage`** — Used to store extension settings.
-* **`activeTab`** — Allows interaction with the active browser tab when required by extension functionality.
 * **`downloads`** — Used by the popup to allow users to download the most recently processed file.
 * **Host permission for `<all_urls>`** — Required so the content script can detect and process file-upload fields on web pages.
 

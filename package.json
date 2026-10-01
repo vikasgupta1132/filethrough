@@ -37,13 +37,13 @@
   },
   "author": "FileThrough Team",
   "license": "MIT",
-  "homepage": "https://filethrough.io",
+  "homepage": "https://getfilethrough.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/filethrough"
+    "url": "https://github.com/vikasgupta1132/filethrough"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/filethrough/issues"
+    "url": "https://github.com/vikasgupta1132/filethrough/issues"
   },
   "keywords": [
     "browser-extension",

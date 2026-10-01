@@ -10,3 +10,6 @@
 
 # Node modules
 node_modules/
+
+#test results
+test-results/
